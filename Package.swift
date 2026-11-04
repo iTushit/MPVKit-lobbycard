@@ -16,7 +16,6 @@ let package = Package(
             name: "_MPVKit",
             dependencies: [
                 "Libmpv", "_FFmpeg", "Libuchardet", "Libbluray",
-                .target(name: "Libluajit", condition: .when(platforms: [.macOS])),
             ],
             path: "Sources/_MPVKit",
             linkerSettings: [
@@ -58,135 +57,130 @@ let package = Package(
 
         .binaryTarget(
             name: "Libunibreak",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libunibreak.xcframework.zip",
-            checksum: "940d9833cf4477d0a260d9f2b4066125bc0ff7bbc111ac3c90e774765b77a559"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libunibreak.xcframework.zip",
+            checksum: "a4a8567e5454a28c539de3e6bc5018fd499516ae5be3152d56857b1e47253c16"
         ),
 
         .binaryTarget(
             name: "Libfreetype",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libfreetype.xcframework.zip",
-            checksum: "496ca62488530e14b1e4624d20ee2b237c0bd675cd70c19da578a5768302d02d"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libfreetype.xcframework.zip",
+            checksum: "caa886f4027c778e0b6ca7ead5b83e6fda8451d189afb3eb0b68656002c52145"
         ),
 
         .binaryTarget(
             name: "Libfribidi",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libfribidi.xcframework.zip",
-            checksum: "bc15e097b892f2f90424e4a27ba287070cc2f98a74a4da10e6d2481d15cf5ff9"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libfribidi.xcframework.zip",
+            checksum: "e13f0eebbfa4ca04fe3de639136a9ee7d35f5d7fe698f22aa721609848e1b18a"
         ),
 
         .binaryTarget(
             name: "Libharfbuzz",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libharfbuzz.xcframework.zip",
-            checksum: "aa8e0b9ca0387dac74e3e93c86e34d11982bb013b28022d0e6966a8427a35b2e"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libharfbuzz.xcframework.zip",
+            checksum: "84734a3e729ed94daf4f82f98cd4895a80a55132458984bbd5edc74a56d9bbbb"
         ),
 
         .binaryTarget(
             name: "Libass",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libass.xcframework.zip",
-            checksum: "3f4c576d2818ceb4544aa2a20e1f55846511c5e706fd19adc3ea9fd842270498"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libass.xcframework.zip",
+            checksum: "67c080ab75f500747ad115ba616a161658cd87e3c81a836a44f887d2835e12ab"
         ),
 
 
         .binaryTarget(
             name: "Libbluray",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libbluray.xcframework.zip",
-            checksum: "bc037d34e2b0b5ab7f202fb371f5fb298136cc66fdf406c2172185d06f53f18d"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libbluray.xcframework.zip",
+            checksum: "b29f2fe73d2657cc6d5a8036f5d8551a2555b3a915cf61a6ef55f161572b28df"
         ),
 
         .binaryTarget(
             name: "Libuavs3d",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libuavs3d.xcframework.zip",
-            checksum: "bd5256081486d16c51c868d755bf70266c424b54c895269580de44ec6707f789"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libuavs3d.xcframework.zip",
+            checksum: "70c67e8887fa98f447b2d3729109fd3e15effd31f7bd612de02f6bff7c8cde7a"
         ),
 
         .binaryTarget(
             name: "Libdovi",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libdovi.xcframework.zip",
-            checksum: "e693e239808350868e79c5448ef9f02e2716bc822dd8632a41a368a1eae5ca7d"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libdovi.xcframework.zip",
+            checksum: "2ac957f287ef0a613197891623556c7cf1f46a5a88e6341e823275c68a990811"
         ),
 
         .binaryTarget(
             name: "MoltenVK",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/MoltenVK.xcframework.zip",
-            checksum: "aee189c54ad7c62bf734a3dc51eb4cfad5685d1d63b0ec519ecd1b437c332418"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/MoltenVK.xcframework.zip",
+            checksum: "5ac368cd902f45d09c85e933e9c2c606caf6fa9d4c51026e6aad236e535cb8ea"
         ),
 
         .binaryTarget(
             name: "Libshaderc_combined",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libshaderc_combined.xcframework.zip",
-            checksum: "758047b615708575b580eb960a2d083f760a29dc462d6eaa360416c946ce433b"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libshaderc_combined.xcframework.zip",
+            checksum: "1c4cc1491ad04a483e2e7a99c9bbbb803c512757daf5ed7782f5a8180b634cc1"
         ),
 
         .binaryTarget(
             name: "lcms2",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/lcms2.xcframework.zip",
-            checksum: "dc0dce0606f6ab6841a8ec5a6bd4448e2f3ef00661a050460f806c9393dc6982"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/lcms2.xcframework.zip",
+            checksum: "3903348a00825a9d6b1ff6129333888c860d1d744fa1dd605f0288223d733a88"
         ),
 
         .binaryTarget(
             name: "Libplacebo",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libplacebo.xcframework.zip",
-            checksum: "2fa3d54cb81f302d6f11c7b2f509af30944381c3b11ee9d35096eb4637a6e2dd"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libplacebo.xcframework.zip",
+            checksum: "6071585f7178af776c51d0460f220c49a8c427159a462a40a008f07e45c0dbae"
         ),
 
         .binaryTarget(
             name: "Libdav1d",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libdav1d.xcframework.zip",
-            checksum: "d1a32ae6a1f0193e9f05c44c9176844af7f6d2a58cb33843f6f1b8dfd9224083"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libdav1d.xcframework.zip",
+            checksum: "2c0878d87a82a8df8381e53aa7db8fae5c06140c054fa66bfb702c6f3f7df625"
         ),
 
         .binaryTarget(
             name: "Libavcodec",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libavcodec.xcframework.zip",
-            checksum: "87c30d7664747e00529d915cfcfd6b8c7ea28aa4a0ff20098f3e42b6f14963ac"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libavcodec.xcframework.zip",
+            checksum: "e6f715771e25821b7bdc814574af439eba59cd4e6fdc02316cc64447b016db60"
         ),
         .binaryTarget(
             name: "Libavdevice",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libavdevice.xcframework.zip",
-            checksum: "60c0cad4c20f8fd615e345dad96606441c9c1cb5bb82a20d0f4e6cae475c59ff"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libavdevice.xcframework.zip",
+            checksum: "272b3b15c402e0ec9f8abb2706217c2ee1b5e07b836ccd7bb5126fb24ed52257"
         ),
         .binaryTarget(
             name: "Libavformat",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libavformat.xcframework.zip",
-            checksum: "c890e7cf5eb1975c68a0e09c5d02e3fb06e404b1b91dd6a0fd6c99dff57affa9"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libavformat.xcframework.zip",
+            checksum: "59ee5a7da12cac53365e16e8d73cf124441eb9b0f62defbb0bfa0dab59208555"
         ),
         .binaryTarget(
             name: "Libavfilter",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libavfilter.xcframework.zip",
-            checksum: "14eabe6d23dde461f8d8464bdc77cb5e388c64927bdf3cae5234f98383b395e6"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libavfilter.xcframework.zip",
+            checksum: "641e937284fa41224e4ddef1ef45b79e9e4c5262acaa4c6f2b6a37f18540025d"
         ),
         .binaryTarget(
             name: "Libavutil",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libavutil.xcframework.zip",
-            checksum: "5a45713804ee02afb5a55f651b106a61976c6ecfb5263ff5dcf76bfc3d73b178"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libavutil.xcframework.zip",
+            checksum: "a2a7236c910465abc31698c4911a3a7821583dd2df9b00cc2467502f9eb9091e"
         ),
         .binaryTarget(
             name: "Libswresample",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libswresample.xcframework.zip",
-            checksum: "0d8be3b8c74c94b02d57fafafc78176d14ed89b1ae63d84d6d3f1d77e792e585"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libswresample.xcframework.zip",
+            checksum: "51b1df087cd25128775af79160b47c4e013705804539e0e96a4acfd798a3661d"
         ),
         .binaryTarget(
             name: "Libswscale",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libswscale.xcframework.zip",
-            checksum: "6bd0917847bf79112fd4c3632108128af2a194cfffb47e647924ecc5867745ae"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libswscale.xcframework.zip",
+            checksum: "85ed121ac604b0874db793ff5a1e8ca6a8f901eb0d86886dd8288f5f2fae8475"
         ),
 
         .binaryTarget(
             name: "Libuchardet",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libuchardet.xcframework.zip",
-            checksum: "ea4f548a230a755e059144657cc9e2ff563c1cdeae03974c38f8b6e1a40303fb"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libuchardet.xcframework.zip",
+            checksum: "ece39e5a4632762ab4118dc04259eedd1deb50a8de32f3e30a64e37afb11946a"
         ),
 
-        .binaryTarget(
-            name: "Libluajit",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libluajit.xcframework.zip",
-            checksum: "3a171ef1627fb88260893dc452f989bd93dd8510814771ba3aff7753470d3f3e"
-        ),
 
         .binaryTarget(
             name: "Libmpv",
-            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.1/Libmpv.xcframework.zip",
-            checksum: "2562ad906c5c20116a639b9c37337cf50f8e26f2608097923d16c30295760c4d"
+            url: "https://github.com/iTushit/MPVKit-lobbycard/releases/download/1.0.0-lobbycard.2/Libmpv.xcframework.zip",
+            checksum: "3d56be677d57c1e4efbd2c0467e10d157156d29050ba84ee40397aa7b549d684"
         ),
         //AUTO_GENERATE_TARGETS_END//
     ]
