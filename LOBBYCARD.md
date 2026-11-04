@@ -15,6 +15,20 @@ The other libraries (libass, libplacebo, MoltenVK, dav1d, …) are MPVKit's own 
 unchanged. The built frameworks and the complete source code of every library they contain are
 attached to this repository's releases.
 
+## Dynamic frameworks (from 1.0.0-lobbycard.2)
+
+The released frameworks are **dynamic**: the app loads mpv, FFmpeg, libass and the rest as
+separate libraries inside its bundle, so anyone can replace them with their own builds without
+the app's object files (LGPL 2.1 §6(b)). `make-dynamic.py` makes them from the static build:
+each library is linked whole into its own dynamic library, against the others it uses.
+
+FFmpeg's seven libraries call each other's internal functions, and shaderc (used by FFmpeg and
+libplacebo) exports none, so FFmpeg, libplacebo and shaderc are one dynamic library, in the
+`Libavutil` framework; the `Libavcodec`, `Libavformat`, `Libavfilter`, `Libavdevice`,
+`Libswresample`, `Libswscale`, `Libplacebo` and `Libshaderc_combined` frameworks keep their
+headers and re-export it. Platforms: iOS, iOS Simulator, Mac Catalyst, tvOS (arm64), tvOS
+Simulator. Libluajit (macOS only) is left out.
+
 ## Building
 
 ```sh
@@ -22,5 +36,11 @@ brew install meson ninja nasm cmake automake
 make build platform=ios,isimulator,tvos,tvsimulator,maccatalyst
 ```
 
-The frameworks land in `dist/release/`. Licences: MPVKit's scripts LGPL-3.0 (see `LICENSE`); mpv
+The frameworks land in `dist/release/`. Then:
+
+```sh
+python3 lobbycard-release.py --local                     # static, unzipped: dist/lobbycard/local
+python3 make-dynamic.py dist/lobbycard/local dist/lobbycard/dynamic
+python3 lobbycard-release.py --dynamic <tag> <sources.tar>
+``` Licences: MPVKit's scripts LGPL-3.0 (see `LICENSE`); mpv
 and FFmpeg LGPL-2.1-or-later as built here; the other libraries under their own licences.

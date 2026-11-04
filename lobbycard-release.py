@@ -3,6 +3,8 @@
 Makes a Lobbycard release of this MPVKit build:
 
   python3 lobbycard-release.py <tag> [sources.tar]
+  python3 lobbycard-release.py --dynamic <tag> [sources.tar]   (the dynamic frameworks made by
+                                             make-dynamic.py in dist/lobbycard/dynamic: how the app ships)
   python3 lobbycard-release.py --local      (dist/lobbycard/local: a package of the frameworks on this
                                              Mac, for testing the app against them before a release)
 
@@ -20,6 +22,9 @@ BUILT = ["Libmpv", "Libavcodec", "Libavdevice", "Libavfilter", "Libavformat", "L
 # GnuTLS and what it needs (LGPLv3), the GPL-only SMB library, and OpenSSL (FFmpeg uses Apple's TLS).
 DROPPED = ["gmp", "nettle", "hogweed", "gnutls", "Libsmbclient", "Libssl", "Libcrypto"]
 
+dynamic = sys.argv[1] == "--dynamic"
+if dynamic:
+    sys.argv.pop(1)
 local = sys.argv[1] == "--local"
 tag = "local" if local else sys.argv[1]
 sources = sys.argv[2] if len(sys.argv) > 2 and not local else None
@@ -46,13 +51,23 @@ for name in DROPPED:
     package = re.sub(r'\n        \.binaryTarget\(\n            name: "%s",.*?\n        \),' % re.escape(name), "", package, flags=re.S)
 package = re.sub(r'\n                "gmp", "nettle", "hogweed", "gnutls", ', '\n                ', package)
 package = package.replace('"Libssl", "Libcrypto", ', '')
+if dynamic:
+    # Libluajit is macOS-only (mpv's Lua there) and has no dynamic version: not in the package.
+    package = package.replace('                .target(name: "Libluajit", condition: .when(platforms: [.macOS])),\n', '')
+    package = re.sub(r'\n        \.binaryTarget\(\n            name: "Libluajit",.*?\n        \),', "", package, flags=re.S)
+    assert "Libluajit" not in package, "Libluajit left in Package.swift"
 assert "gnutls" not in package and "-GPL" not in package and "Libssl" not in package, "leftovers in Package.swift"
 
 assets = []
 def binary(match):
     name, url, checksum = match.group(1), match.group(2), match.group(3)
     file = os.path.join(out, f"{name}.xcframework.zip")
-    if name in BUILT:
+    if dynamic:
+        if os.path.exists(file):
+            os.remove(file)
+        subprocess.run(["ditto", "-c", "-k", "--keepParent", os.path.join(here, "dist", "lobbycard", "dynamic", f"{name}.xcframework"), file], check=True)
+        checksum = sha256(file)
+    elif name in BUILT:
         built = os.path.join(here, "dist", "release", f"{name}.xcframework.zip")
         subprocess.run(["cp", built, file], check=True)
         checksum = sha256(file)
