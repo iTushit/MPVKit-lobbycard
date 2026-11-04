@@ -65,7 +65,7 @@ def binary(match):
     if dynamic:
         if os.path.exists(file):
             os.remove(file)
-        subprocess.run(["ditto", "-c", "-k", "--keepParent", os.path.join(here, "dist", "lobbycard", "dynamic", f"{name}.xcframework"), file], check=True)
+        subprocess.run(["ditto", "-c", "-k", "--norsrc", "--noextattr", "--noqtn", "--noacl", "--keepParent", os.path.join(here, "dist", "lobbycard", "dynamic", f"{name}.xcframework"), file], check=True)
         checksum = sha256(file)
     elif name in BUILT:
         built = os.path.join(here, "dist", "release", f"{name}.xcframework.zip")
