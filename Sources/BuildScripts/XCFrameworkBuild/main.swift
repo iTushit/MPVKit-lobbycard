@@ -4,11 +4,9 @@ do {
     let options = try ArgumentOptions.parse(CommandLine.arguments)
     try Build.performCommand(options)
 
-    // SSL
+    // SSL. Lobbycard: FFmpeg uses Apple's TLS (Secure Transport); GnuTLS, GMP and Nettle (LGPLv3)
+    // are left out, so the whole build is LGPL 2.1.
     try BuildOpenSSL().buildALL()
-    try BuildGmp().buildALL()
-    try BuildNettle().buildALL()
-    try BuildGnutls().buildALL()
 
     // libass
     try BuildUnibreak().buildALL()
@@ -373,11 +371,8 @@ private class BuildMPV: BaseBuild {
     }
 
     override func flagsDependencelibrarys() -> [Library] {
-        if BaseBuild.options.enableGPL {
-            return [.gmp, .libsmbclient]
-        } else {
-            return [.gmp]
-        }
+        // Lobbycard: no GMP (see main).
+        BaseBuild.options.enableGPL ? [.libsmbclient] : []
     }
 
 
@@ -459,6 +454,18 @@ private class BuildFFMPEG: BaseBuild {
             Utility.shell("brew install sdl2")
         }
 
+        // Lobbycard: Secure Transport (Apple's TLS) is used instead of GnuTLS. FFmpeg's configure
+        // only checks that SecItemImport links, which it does for Mac Catalyst although its header
+        // offers it on macOS only: check with the header, so Catalyst builds without it (loading
+        // certificate files, which Lobbycard doesn't use).
+        let configure = directoryURL + "configure"
+        if let data = FileManager.default.contents(atPath: configure.path), var str = String(data: data, encoding: .utf8) {
+            str = str.replacingOccurrences(of: "check_func SecItemImport \"-framework CoreFoundation -framework Security\"",
+                                           with: "check_func_headers Security/Security.h SecItemImport \"-framework CoreFoundation -framework Security\"")
+            // In place, so the script keeps its executable permission.
+            try? str.write(toFile: configure.path, atomically: false, encoding: .utf8)
+        }
+
         let lldbFile = URL.currentDirectory + "LLDBInitFile"
         try? FileManager.default.removeItem(at: lldbFile)
         FileManager.default.createFile(atPath: lldbFile.path, contents: nil, attributes: nil)
@@ -471,11 +478,8 @@ private class BuildFFMPEG: BaseBuild {
     }
 
     override func flagsDependencelibrarys() -> [Library] {
-        if BaseBuild.options.enableGPL {
-            return [.gmp, .nettle, .gnutls, .libsmbclient]
-        } else {
-            return [.gmp, .nettle, .gnutls]
-        }
+        // Lobbycard: no GnuTLS/GMP/Nettle (see main).
+        BaseBuild.options.enableGPL ? [.libsmbclient] : []
     }
 
     override func cFlags(platform: PlatformType, arch: ArchType) -> [String] {
@@ -609,7 +613,11 @@ private class BuildFFMPEG: BaseBuild {
         //        if platform == .isimulator || platform == .tvsimulator {
         //            arguments.append("--assert-level=1")
         //        }
-        var dependencyLibrary = [Library.gmp, .gnutls, .libfreetype, .libharfbuzz, .libfribidi, .libass, .vulkan, .libshaderc, .lcms2, .libplacebo, .libdav1d, .libuavs3d]
+        // Lobbycard: no GMP/GnuTLS (see main); Apple's TLS instead.
+        arguments.append("--enable-securetransport")
+        // Lobbycard: no DTS or TrueHD decoders (the app never decodes them; the server converts).
+        arguments += ["--disable-decoder=dca", "--disable-decoder=truehd", "--disable-decoder=mlp"]
+        var dependencyLibrary = [Library.libfreetype, .libharfbuzz, .libfribidi, .libass, .vulkan, .libshaderc, .lcms2, .libplacebo, .libdav1d, .libuavs3d]
         if BaseBuild.options.enableGPL {
             dependencyLibrary += [.libsmbclient]
         }
@@ -650,7 +658,8 @@ private class BuildFFMPEG: BaseBuild {
         "--disable-bzlib", "--disable-gray", "--disable-iconv", "--disable-linux-perf",
         "--disable-shared", "--disable-small", "--disable-symver", "--disable-xlib",
         "--enable-cross-compile", "--enable-libxml2",
-        "--enable-optimizations", "--enable-pic", "--enable-runtime-cpudetect", "--enable-static", "--enable-thumb", "--enable-version3",
+        "--enable-optimizations", "--enable-pic", "--enable-runtime-cpudetect", "--enable-static", "--enable-thumb",
+        // Lobbycard: no "--enable-version3": LGPL 2.1 (configure refuses any LGPLv3-only library).
         "--pkg-config-flags=--static",
         // Documentation options:
         "--disable-doc", "--disable-htmlpages", "--disable-manpages", "--disable-podpages", "--disable-txtpages",
